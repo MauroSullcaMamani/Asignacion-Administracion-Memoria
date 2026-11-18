@@ -113,3 +113,31 @@ def analizar_fragmentacion():
     print(f"Solicitud contigua: {solicitud} MB")
     print("Resultado: RECHAZADO por dispersión de bloques" if mayor < solicitud <= total else "Sin rechazo por dispersión")
     return interna, total, mayor
+
+
+def menu():
+    opciones = {
+        "1": particionamiento_fijo,
+        "2": particionamiento_variable,
+        "3": comparar_algoritmos,
+        "4": analizar_fragmentacion,
+    }
+    while True:
+        print("\n=== SIMULADOR DE ASIGNACIÓN Y ADMINISTRACIÓN DE MEMORIA ===")
+        print("1. Simular particionamiento fijo")
+        print("2. Simular particionamiento variable")
+        print("3. Comparar algoritmos de asignación")
+        print("4. Analizar fragmentación")
+        print("0. Salir")
+        opcion = input("Seleccione una opción: ").strip()
+        if opcion == "0":
+            print("Fin del programa.")
+            break
+        if opcion in opciones:
+            opciones[opcion]()
+        else:
+            print("Opción inválida. Intente nuevamente.")
+
+
+if __name__ == "__main__":
+    menu()
