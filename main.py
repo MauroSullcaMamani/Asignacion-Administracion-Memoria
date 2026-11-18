@@ -25,3 +25,21 @@ def particionamiento_fijo():
     print(f"Fragmentación interna total: {desperdicio} MB")
 
     return desperdicio
+
+def particionamiento_variable():
+    print("\n=== PARTICIONAMIENTO VARIABLE ===")
+    print(f"Memoria inicial: {CAPACIDAD_PARTICIONES} MB")
+
+    disponible = CAPACIDAD_PARTICIONES
+
+    for i, solicitud in enumerate(SOLICITUDES_PARTICIONES, 1):
+        if solicitud <= disponible:
+            disponible -= solicitud
+            print(f"P{i}: asignados {solicitud} MB | libre: {disponible} MB")
+        else:
+            print(f"P{i}: rechazado")
+
+    print(f"Memoria utilizada: {CAPACIDAD_PARTICIONES - disponible} MB")
+    print(f"Memoria libre: {disponible} MB")
+
+    return disponible
