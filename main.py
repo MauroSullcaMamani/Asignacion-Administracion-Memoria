@@ -75,3 +75,18 @@ def particionamiento_variable():
     print(f"Memoria utilizada: {CAPACIDAD_PARTICIONES - disponible} MB")
     print(f"Memoria libre: {disponible} MB")
     return disponible
+
+
+def analizar_fragmentacion():
+    print("\n=== ANÁLISIS DE FRAGMENTACIÓN ===")
+    interna = sum(cap - usado for cap, usado in zip(PARTICIONES_FIJAS, SOLICITUDES_PARTICIONES))
+    print(f"Interna: 800 MB reservados - 550 MB utilizados = {interna} MB")
+    huecos = [100, 150, 200]
+    solicitud = 300
+    total = sum(huecos)
+    mayor = max(huecos)
+    print(f"Externa: huecos separados {huecos} MB")
+    print(f"Libre total: {total} MB | Mayor hueco: {mayor} MB")
+    print(f"Solicitud contigua: {solicitud} MB")
+    print("Resultado: RECHAZADO por dispersión de bloques" if mayor < solicitud <= total else "Sin rechazo por dispersión")
+    return interna, total, mayor
