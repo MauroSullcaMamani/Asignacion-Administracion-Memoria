@@ -77,6 +77,29 @@ def particionamiento_variable():
     return disponible
 
 
+def comparar_algoritmos():
+    print("\n=== COMPARACIÓN DE ALGORITMOS ===")
+    print("Bloques B1..B5:", BLOQUES, "MB")
+    print("Procesos P1..P4:", PROCESOS, "MB")
+    print("Regla Next Fit: el siguiente recorrido empieza en el último bloque elegido.")
+    nombres = ("First Fit", "Best Fit", "Worst Fit", "Next Fit")
+    print(f"{'Algoritmo':<12} {'P1':<11}{'P2':<11}{'P3':<11}{'P4':<11}")
+    resultados = {}
+    for nombre in nombres:
+        destinos, libres = asignar(BLOQUES, PROCESOS, nombre)
+        asignados = sum(s for s, indice in zip(PROCESOS, destinos) if indice is not None)
+        exitos = sum(indice is not None for indice in destinos)
+        resultados[nombre] = (destinos, libres, asignados, exitos)
+        celdas = [texto_bloque(i) for i in destinos]
+        print(f"{nombre:<12} {celdas[0]:<11}{celdas[1]:<11}{celdas[2]:<11}{celdas[3]:<11}")
+
+    print("\nRESUMEN (mismos datos iniciales para cada algoritmo)")
+    print(f"{'Algoritmo':<12}{'Asignados':>11}{'Rechazados':>12}{'Usada':>12}{'Libre':>12}{'Atención':>12}")
+    for nombre, (_, libres, usada, exitos) in resultados.items():
+        print(f"{nombre:<12}{exitos:>11}{len(PROCESOS)-exitos:>12}{str(usada)+' MB':>12}{str(sum(libres))+' MB':>12}{str(exitos*100//len(PROCESOS))+' %':>12}")
+    return resultados
+
+
 def analizar_fragmentacion():
     print("\n=== ANÁLISIS DE FRAGMENTACIÓN ===")
     interna = sum(cap - usado for cap, usado in zip(PARTICIONES_FIJAS, SOLICITUDES_PARTICIONES))
